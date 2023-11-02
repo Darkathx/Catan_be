@@ -1,4 +1,4 @@
-package edu.odtu.ceng453.group10.CatanBackend;
+package edu.odtu.ceng453.group10.catanbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
