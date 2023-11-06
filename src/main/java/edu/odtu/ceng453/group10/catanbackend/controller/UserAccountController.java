@@ -5,6 +5,7 @@ import edu.odtu.ceng453.group10.catanbackend.dto.UserAccountDto;
 import edu.odtu.ceng453.group10.catanbackend.dto.LoginUserAccountRequest;
 import edu.odtu.ceng453.group10.catanbackend.dto.ResetUserAccountPasswordRequest;
 import edu.odtu.ceng453.group10.catanbackend.service.UserAccountService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,11 @@ public class UserAccountController {
 
     @PostMapping("/login")
     public ResponseEntity<UserAccountDto> login(@RequestBody LoginUserAccountRequest request) {
-        return ResponseEntity.ok(userAccountService.loginUserAccount(request));
+        UserAccountDto dto = userAccountService.loginUserAccount(request);
+        if(dto == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return ResponseEntity.ok(userAccountService.loginUserAccount(request));
     }
 
     @GetMapping("/resetPassword")
@@ -37,6 +42,10 @@ public class UserAccountController {
     @PutMapping("/resetPassword")
     public ResponseEntity<UserAccountDto> resetPassword(@RequestBody ResetUserAccountPasswordRequest request) {
         // when users clicks the link and sets a password this part will execute
-        return ResponseEntity.ok(userAccountService.resetPassword(request));
+        UserAccountDto dto = userAccountService.resetPassword(request);
+        if(dto == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return ResponseEntity.ok(dto);
     }
 }

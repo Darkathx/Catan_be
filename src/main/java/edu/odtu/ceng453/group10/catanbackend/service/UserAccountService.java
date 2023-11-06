@@ -26,26 +26,25 @@ public class UserAccountService {
     }
 
     public UserAccountDto loginUserAccount(LoginUserAccountRequest request){
-        String hashedPw = request.getPassword();
         String email = request.getEmail();
         UserAccount userAccount = repository.findUserAccountByEmail(email);
 
         if(userAccount != null){
             String userPassword = userAccount.getPassword();
-            if (userPassword.equals(hashedPw)){
+            if (checkPassword(request.getPassword(), userPassword)){
                 return converter.convert(userAccount);
-            }else {
-                return null;
             }
-        }else{
-            return null;
         }
+        return null;
     }
 
     public UserAccountDto resetPassword(ResetUserAccountPasswordRequest request){
         String email = request.getEmail();
         String newPasswordHashed = hashPassword(request.getNewPassword());
         UserAccount userAccount = repository.findUserAccountByEmail(email);
+        if(userAccount == null)
+            return null;
+
         userAccount.setPassword(newPasswordHashed);
         return converter.convert(repository.save(userAccount));
     }
@@ -53,5 +52,10 @@ public class UserAccountService {
     private String hashPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
+    }
+
+    private boolean checkPassword(String plainPassword, String hashedPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(plainPassword, hashedPassword);
     }
 }
