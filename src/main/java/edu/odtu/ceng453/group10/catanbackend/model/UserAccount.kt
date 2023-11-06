@@ -12,7 +12,7 @@ data class UserAccount(
     val id: String = "default",
     @Column(unique = true)
     val username: String = "default",
-    val password: String = "default",
+    var password: String = "default",
     val creationDate: LocalDateTime? = null,
     @Column(unique = true)
     val email: String? = null,

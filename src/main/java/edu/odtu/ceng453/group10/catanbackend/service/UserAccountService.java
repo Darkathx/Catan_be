@@ -1,8 +1,6 @@
 package edu.odtu.ceng453.group10.catanbackend.service;
 
-import edu.odtu.ceng453.group10.catanbackend.dto.CreateUserAccountRequest;
-import edu.odtu.ceng453.group10.catanbackend.dto.UserAccountDto;
-import edu.odtu.ceng453.group10.catanbackend.dto.UserAccountDtoConverter;
+import edu.odtu.ceng453.group10.catanbackend.dto.*;
 import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import edu.odtu.ceng453.group10.catanbackend.repository.UserAccountRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +20,33 @@ public class UserAccountService {
 
     public UserAccountDto createUserAccount(CreateUserAccountRequest request) {
         String hashedPw = hashPassword(request.getPassword());
+
         UserAccount userAccount = new UserAccount(request.getUsername(), hashedPw, LocalDateTime.now(), request.getEmail());
+        return converter.convert(repository.save(userAccount));
+    }
+
+    public UserAccountDto loginUserAccount(LoginUserAccountRequest request){
+        String hashedPw = request.getPassword();
+        String email = request.getEmail();
+        UserAccount userAccount = repository.findUserAccountByEmail(email);
+
+        if(userAccount != null){
+            String userPassword = userAccount.getPassword();
+            if (userPassword.equals(hashedPw)){
+                return converter.convert(userAccount);
+            }else {
+                return null;
+            }
+        }else{
+            return null;
+        }
+    }
+
+    public UserAccountDto resetPassword(ResetUserAccountPasswordRequest request){
+        String email = request.getEmail();
+        String newPasswordHashed = hashPassword(request.getNewPassword());
+        UserAccount userAccount = repository.findUserAccountByEmail(email);
+        userAccount.setPassword(newPasswordHashed);
         return converter.convert(repository.save(userAccount));
     }
 

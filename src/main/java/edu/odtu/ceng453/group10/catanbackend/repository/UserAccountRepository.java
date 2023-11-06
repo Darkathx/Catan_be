@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface UserAccountRepository extends JpaRepository<UserAccount, String> {
     List<GameRecord> findGameRecordsByUserAccountId(String userAccountId);
+    UserAccount findUserAccountByEmail(String email);
 }
