@@ -1,8 +1,15 @@
 package edu.odtu.ceng453.group10.catanbackend.service;
 
+import edu.odtu.ceng453.group10.catanbackend.config.SMTPConfig;
 import edu.odtu.ceng453.group10.catanbackend.dto.*;
 import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import edu.odtu.ceng453.group10.catanbackend.repository.UserAccountRepository;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -47,6 +54,25 @@ public class UserAccountService {
 
         userAccount.setPassword(newPasswordHashed);
         return converter.convert(repository.save(userAccount));
+    }
+
+    public boolean sendResetMail(LoginUserAccountRequest request) {
+        UserAccountDto login = loginUserAccount(request);
+        if(login == null) return false;
+
+        Session session = SMTPConfig.getSession();
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("group10@test.com"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(request.getEmail()));
+            message.setSubject("CENG453 Project Password Reset Link");
+            message.setText("Here is your reset link: " + SMTPConfig.URL + ". Please send a put request with your email and new password.");
+            Transport.send(message);
+            return true;
+        }
+        catch (MessagingException ex) {
+            return false;
+        }
     }
 
     private String hashPassword(String password) {
