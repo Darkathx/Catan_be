@@ -33,10 +33,13 @@ public class UserAccountController {
             return ResponseEntity.ok(userAccountService.loginUserAccount(request));
     }
 
-    @GetMapping("/resetPassword")
-    public ResponseEntity<UserAccountDto> resetPasswordLink() {
-        // TODO:should send a link to the user
-        return null;
+    @PostMapping("/resetPassword")
+    public ResponseEntity<UserAccountDto> resetPasswordLink(@RequestBody LoginUserAccountRequest request) {
+        boolean result =  userAccountService.sendResetMail(request);
+        if(!result)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/resetPassword")
