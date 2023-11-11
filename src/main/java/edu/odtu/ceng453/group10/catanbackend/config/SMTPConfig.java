@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public final class SMTPConfig {
     public static Properties PROP = new Properties();
-    public static String URL = "/userAccount/resetPassword";
+    public static String URL = "https://catan-backend-ds1e.onrender.com/userAccount/resetPassword";
     static {
         //PROP.put("mail.smtp.auth", true);
         //PROP.put("mail.smtp.starttls.enable", "true");
