@@ -1,6 +1,6 @@
 package edu.odtu.ceng453.group10.catanbackend.service;
 
-import edu.odtu.ceng453.group10.catanbackend.model.GameScore;
+import edu.odtu.ceng453.group10.catanbackend.dto.GameScoreDto;
 import edu.odtu.ceng453.group10.catanbackend.repository.GameScoreRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +15,17 @@ public class GameScoreService {
         this.gameScoreRepository = gameScoreRepository;
     }
 
-    public List<GameScore> getLeaderboardForLastWeek() {
+    public List<GameScoreDto> getLeaderboardForLastWeek() {
         LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
-        LocalDateTime now = LocalDateTime.now();
-        return gameScoreRepository.findScoresBetweenDates(oneWeekAgo, now);
+        return gameScoreRepository.findTotalScoresBetweenDates(oneWeekAgo, LocalDateTime.now());
     }
 
-    public List<GameScore> getLeaderboardForLastMonth() {
+    public List<GameScoreDto> getLeaderboardForLastMonth() {
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-        LocalDateTime now = LocalDateTime.now();
-        return gameScoreRepository.findScoresBetweenDates(oneMonthAgo, now);
+        return gameScoreRepository.findTotalScoresBetweenDates(oneMonthAgo, LocalDateTime.now());
     }
 
-    public List<GameScore> getOverallLeaderboard() {
-        return gameScoreRepository.findAllByOrderByScoreDesc();
+    public List<GameScoreDto> getOverallLeaderboard() {
+        return gameScoreRepository.findAllTotalScores();
     }
 }
