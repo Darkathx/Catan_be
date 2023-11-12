@@ -115,7 +115,7 @@ public class UserAccountService {
      * @param password The plaintext password to hash.
      * @return The hashed password.
      */
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
@@ -127,7 +127,7 @@ public class UserAccountService {
      * @param hashedPassword The stored hashed password to check against.
      * @return true if the passwords match, false otherwise.
      */
-    private boolean checkPassword(String plainPassword, String hashedPassword) {
+    public boolean checkPassword(String plainPassword, String hashedPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(plainPassword, hashedPassword);
     }

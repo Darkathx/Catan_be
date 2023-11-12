@@ -15,14 +15,10 @@ public final class SMTPConfig {
      * Properties configuration for the SMTP server.
      */
     public static Properties PROP = new Properties();
-<<<<<<< HEAD
-    public static String URL = "https://catan-backend-ds1e.onrender.com/userAccount/resetPassword";
-=======
     /**
      * URL endpoint for resetting the password.
      */
-    public static String URL = "/userAccount/resetPassword";
->>>>>>> 1f68a7a659d7b0348a895c0622b6c2e14a92c103
+    public static String URL = "https://catan-backend-ds1e.onrender.com/userAccount/resetPassword";
     static {
         //PROP.put("mail.smtp.auth", true);
         //PROP.put("mail.smtp.starttls.enable", "true");
