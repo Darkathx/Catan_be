@@ -1,7 +1,5 @@
 package edu.odtu.ceng453.group10.catanbackend.config;
 
-import jakarta.mail.Authenticator;
-import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;
 
 import java.util.Properties;

@@ -2,7 +2,6 @@ package edu.odtu.ceng453.group10.catanbackend.controller;
 
 import edu.odtu.ceng453.group10.catanbackend.dto.CreateGameRecordRequest;
 import edu.odtu.ceng453.group10.catanbackend.dto.GameRecordDto;
-import edu.odtu.ceng453.group10.catanbackend.dto.GameRecordDtoConverter;
 import edu.odtu.ceng453.group10.catanbackend.service.GameRecordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
