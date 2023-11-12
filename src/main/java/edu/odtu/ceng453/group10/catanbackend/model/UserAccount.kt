@@ -46,7 +46,7 @@ data class UserAccount(
      */
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinTable(
-        name = "game_history",
+        name = "game_score",
         joinColumns = [JoinColumn(name = "user_account_id")],
         inverseJoinColumns = [JoinColumn(name = "match_id")]
     )

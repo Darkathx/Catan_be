@@ -7,6 +7,7 @@ import edu.odtu.ceng453.group10.catanbackend.model.GameScore;
 import edu.odtu.ceng453.group10.catanbackend.model.ScoreTableKey;
 import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import edu.odtu.ceng453.group10.catanbackend.repository.GameScoreRepository;
+import org.hibernate.annotations.Comment;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,12 @@ public class GameScoreService {
         this.userAccountService = userAccountService;
     }
 
+    /**
+     * Creates a new GameScore with gameRecord and necessary information about game.
+     * @param request
+     * @param gameRecord
+     * @return true if successful, false otherwise.
+     */
     public boolean createGameScore(CreateGameRecordRequest request, GameRecord gameRecord) {
         String playerId = null;
         int playerScore = 0;
