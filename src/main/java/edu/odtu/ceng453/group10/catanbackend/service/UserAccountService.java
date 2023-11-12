@@ -19,11 +19,13 @@ public class UserAccountService {
     private final UserAccountRepository repository;
     private final UserAccountDtoConverter converter;
 
+
     public UserAccountService(UserAccountRepository repository,
                               UserAccountDtoConverter converter) {
         this.repository = repository;
         this.converter = converter;
     }
+
 
     public UserAccountDto createUserAccount(CreateUserAccountRequest request) {
         String hashedPw = hashPassword(request.getPassword());
@@ -33,12 +35,10 @@ public class UserAccountService {
     }
 
     public UserAccountDto loginUserAccount(LoginUserAccountRequest request){
-        String email = request.getEmail();
-        UserAccount userAccount = repository.findUserAccountByEmail(email);
+        UserAccount userAccount = repository.findUserAccountByEmail(request.getEmail());
 
         if(userAccount != null){
-            String userPassword = userAccount.getPassword();
-            if (checkPassword(request.getPassword(), userPassword)){
+            if (checkPassword(request.getPassword(), userAccount.getPassword())){
                 return converter.convert(userAccount);
             }
         }
@@ -75,12 +75,12 @@ public class UserAccountService {
         }
     }
 
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
 
-    private boolean checkPassword(String plainPassword, String hashedPassword) {
+    public boolean checkPassword(String plainPassword, String hashedPassword) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(plainPassword, hashedPassword);
     }
