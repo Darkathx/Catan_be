@@ -2,11 +2,20 @@
 
 This module consists of the implentations for server-side development of desktop application of our Catan game.
 
+## Used Libraries
+- Kotlin (for cleaner entities)
+- Spotless (linter)
+- Spring Data JPA
+- MariaDB Driver
+- H2 In-Memory Database (for tests)
+- OpenAPI 3 (for Swagger UI)
+- Eclipse Angus Mail
+
 ## Getting Started
 
 ### Prerequisites
 
-- JDK 11 or later
+- JDK 21 or later
 - Gradle (as defined in `gradle/wrapper/gradle-wrapper.properties`)
 
 ### Build and run:
