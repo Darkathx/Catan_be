@@ -32,4 +32,9 @@ data class GameRecord(
      */
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL] , mappedBy = "playedGames")
     val usersInGame: Set<UserAccount>? = null
-)
+) {
+    constructor(dateOfPlay:  LocalDateTime?) : this(
+            "",
+            dateOfPlay = dateOfPlay
+    )
+}

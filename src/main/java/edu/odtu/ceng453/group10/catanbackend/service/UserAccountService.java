@@ -10,6 +10,7 @@ import jakarta.mail.Session;
 import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -34,6 +35,11 @@ public class UserAccountService {
                               UserAccountDtoConverter converter) {
         this.repository = repository;
         this.converter = converter;
+    }
+
+    public UserAccount getUserAccount(String userAccountId) {
+        Optional<UserAccount> userAccount = repository.findById(userAccountId);
+        return userAccount.orElse(null);
     }
 
     /**
