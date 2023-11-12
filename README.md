@@ -55,9 +55,23 @@ java -jar -Dspring.profiles.active=prod build/libs/catan-backend-group10-0.0.1-S
 
 ## API Documentation
 
-Visit `http://localhost:8080/swagger-ui.html` for the interactive Swagger UI documentation of the API.
+Visit [API Documentation - Swagger UI](https://catan-backend-ds1e.onrender.com/swagger-ui/index.html) for the interactive Swagger UI documentation of the API.
 
 ## Database Schema
+
+![ERDiagram](https://github.com/Darkathx/CENG453_20231_Group10_backend/assets/94515749/89c3bd0f-4618-4bb0-b001-663fd16588e3)
+
+- **UserAccount Entity**: Represents the users of the system with attributes including a unique ID, username, password, creation date, and email.
+
+- **GameRecord Entity**: Represents individual game sessions with attributes including a unique ID and the date of play.
+
+- **GameScore Entity**: Represents the scores obtained in game sessions with attributes including a unique game record ID, user account ID, and the score as an integer.
+
+- **UserAccount to GameScore Relationship**: This is a one-to-many relationship, indicating that a single user can have multiple game scores, but each game score is associated with only one user.
+
+- **GameRecord to GameScore Relationship**: This is also a one-to-many relationship, indicating that a single game record can have multiple game scores associated with it, but each game score is related to only one game record.
+
+- **UserAccount to GameRecord Relationship**: This is a many-to-many relationship where users can have multiple game records and each game record can be associated with multiple users. This is because users can play multiple games and obtain scores in each, and a game can be played by multiple users each having their own scores.
 
 ## Testing 
 
