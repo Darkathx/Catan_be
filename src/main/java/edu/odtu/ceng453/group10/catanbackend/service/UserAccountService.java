@@ -24,32 +24,24 @@ public class UserAccountService {
     private final UserAccountRepository repository;
     private final UserAccountDtoConverter converter;
 
-<<<<<<< HEAD
-
-=======
     /**
      * Constructs a UserAccountService with the necessary UserAccountRepository and UserAccountDtoConverter.
      *
      * @param repository The repository for user account data operations.
      * @param converter  The converter to translate between UserAccount entities and DTOs.
      */
->>>>>>> 1f68a7a659d7b0348a895c0622b6c2e14a92c103
     public UserAccountService(UserAccountRepository repository,
                               UserAccountDtoConverter converter) {
         this.repository = repository;
         this.converter = converter;
     }
 
-<<<<<<< HEAD
-
-=======
     /**
      * Creates a new user account based on the provided request data.
      *
      * @param request Data transfer object containing new user account information.
      * @return A DTO representing the newly created user account.
      */
->>>>>>> 1f68a7a659d7b0348a895c0622b6c2e14a92c103
     public UserAccountDto createUserAccount(CreateUserAccountRequest request) {
         String hashedPw = hashPassword(request.getPassword());
 
@@ -117,9 +109,6 @@ public class UserAccountService {
         }
     }
 
-<<<<<<< HEAD
-    public String hashPassword(String password) {
-=======
     /**
      * Hashes a plaintext password using BCrypt.
      *
@@ -127,14 +116,10 @@ public class UserAccountService {
      * @return The hashed password.
      */
     private String hashPassword(String password) {
->>>>>>> 1f68a7a659d7b0348a895c0622b6c2e14a92c103
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
 
-<<<<<<< HEAD
-    public boolean checkPassword(String plainPassword, String hashedPassword) {
-=======
     /**
      * Checks a plaintext password against a stored hashed password to determine if they match.
      *
@@ -143,7 +128,6 @@ public class UserAccountService {
      * @return true if the passwords match, false otherwise.
      */
     private boolean checkPassword(String plainPassword, String hashedPassword) {
->>>>>>> 1f68a7a659d7b0348a895c0622b6c2e14a92c103
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(plainPassword, hashedPassword);
     }
