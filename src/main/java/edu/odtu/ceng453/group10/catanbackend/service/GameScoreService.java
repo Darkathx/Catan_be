@@ -41,9 +41,9 @@ public class GameScoreService {
      */
     public boolean createGameScore(CreateGameRecordRequest request, GameRecord gameRecord) {
         String playerId;
-        int playerScore = 0;
+        int playerScore = 0, i = 0;
         boolean returnValue = false;
-        for(int i = 0; i < 4; i++) {
+        for(; i < 4; i++) {
             switch(i) {
                 case 0:
                     playerId = request.getFirstPlayerId();
