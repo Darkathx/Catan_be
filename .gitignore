@@ -1,5 +1,9 @@
 HELP.md
 .gradle
+!build
+
+build/*
+!build/libs
 
 ### STS ###
 .apt_generated
