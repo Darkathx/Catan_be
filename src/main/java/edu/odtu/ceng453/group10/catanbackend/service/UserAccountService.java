@@ -38,8 +38,7 @@ public class UserAccountService {
     }
 
     public UserAccount getUserAccount(String userAccountId) {
-        Optional<UserAccount> userAccount = repository.findById(userAccountId);
-        return userAccount.orElse(null);
+      return repository.findUserAccountByEmail(userAccountId);
     }
 
     /**

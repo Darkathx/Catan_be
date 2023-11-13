@@ -31,7 +31,7 @@ data class GameRecord(
      * A set of UserAccount entities that participated in the game.
      * This is eagerly fetched and changes to the game record will cascade to the user accounts.
      */
-    @OneToMany(mappedBy = "gameRecord")
+    @OneToMany(mappedBy = "gameRecord", fetch = FetchType.EAGER)
     val usersInGame: Set<GameScore>? = null
 ) {
     constructor(dateOfPlay:  LocalDateTime?) : this(
