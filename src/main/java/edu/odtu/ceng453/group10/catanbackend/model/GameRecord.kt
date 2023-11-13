@@ -5,6 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToMany
+import jakarta.persistence.OneToMany
 import org.hibernate.annotations.UuidGenerator
 import java.time.LocalDateTime
 
@@ -30,8 +31,8 @@ data class GameRecord(
      * A set of UserAccount entities that participated in the game.
      * This is eagerly fetched and changes to the game record will cascade to the user accounts.
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL] , mappedBy = "playedGames")
-    val usersInGame: Set<UserAccount>? = null
+    @OneToMany(mappedBy = "gameRecord")
+    val usersInGame: Set<GameScore>? = null
 ) {
     constructor(dateOfPlay:  LocalDateTime?) : this(
             "",

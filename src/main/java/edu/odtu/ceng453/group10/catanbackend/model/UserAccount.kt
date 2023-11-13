@@ -44,13 +44,8 @@ data class UserAccount(
      * The collection of game records associated with the user account, representing the games that the user has played.
      * This relationship is defined with a many-to-many association, with a join table specifying the foreign keys.
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    @JoinTable(
-        name = "game_history",
-        joinColumns = [JoinColumn(name = "user_account_id")],
-        inverseJoinColumns = [JoinColumn(name = "match_id")]
-    )
-    val playedGames: Set<GameRecord>? = null
+    @OneToMany(mappedBy = "userAccount")
+    val playedGames: Set<GameScore>? = null
 ) {
     /**
      * Secondary constructor for the UserAccount class that allows creation of an account with just the username,
