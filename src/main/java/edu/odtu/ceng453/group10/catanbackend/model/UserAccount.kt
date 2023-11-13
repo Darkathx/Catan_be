@@ -44,7 +44,7 @@ data class UserAccount(
      * The collection of game records associated with the user account, representing the games that the user has played.
      * This relationship is defined with a many-to-many association, with a join table specifying the foreign keys.
      */
-    @OneToMany(mappedBy = "userAccount")
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.EAGER)
     val playedGames: Set<GameScore>? = null
 ) {
     /**
