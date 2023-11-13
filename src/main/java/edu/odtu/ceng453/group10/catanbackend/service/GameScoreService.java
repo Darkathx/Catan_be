@@ -40,27 +40,35 @@ public class GameScoreService {
      * @return true if successful, false otherwise.
      */
     public boolean createGameScore(CreateGameRecordRequest request, GameRecord gameRecord) {
-        String playerId;
-        int playerScore = 0, i = 0;
         boolean returnValue = false;
-        for(; i < 4; i++) {
-            switch(i) {
+        for(int i = 0; i < 4; i++) {
+            String playerId;
+            int playerScore = 0;
+            playerId = switch(i) {
                 case 0:
-                    playerId = request.getFirstPlayerId();
-                    playerScore = request.getFirstPlayerScore();
+                    yield request.getFirstPlayerId();
                 case 1:
-                    playerId = request.getSecondPlayerId();
-                    playerScore = request.getSecondPlayerScore();
+                    yield request.getSecondPlayerId();
                 case 2:
-                    playerId = request.getThirdPlayerId();
-                    playerScore = request.getThirdPlayerScore();
+                    yield request.getThirdPlayerId();
                 case 3:
-                    playerId = request.getFourthPlayerId();
-                    playerScore = request.getFourthPlayerScore();
+                    yield request.getFourthPlayerId();
                 default:
-                    playerId = null;
-            }
+                    yield null;
+            };
             if(playerId != null) {
+                playerScore = switch(i) {
+                    case 0:
+                        yield request.getFirstPlayerScore();
+                    case 1:
+                        yield request.getSecondPlayerScore();
+                    case 2:
+                        yield request.getThirdPlayerScore();
+                    case 3:
+                        yield request.getFourthPlayerScore();
+                    default:
+                        yield 0;
+                };
                 UserAccount userAccount = userAccountService.getUserAccount(playerId);
                 ScoreTableKey key = new ScoreTableKey(gameRecord.getId(), userAccount.getId());
                 GameScore gameScore = new GameScore(key, userAccount, gameRecord, playerScore);
