@@ -38,7 +38,7 @@ public class GameRecordController {
           content = @Content(schema = @Schema(implementation = GameRecordDto.class))),
           @ApiResponse(responseCode = "400", description = "Invalid input")
       })
-  @PostMapping("/create")
+  @PostMapping(value = "/create", consumes = "application/json")
   public ResponseEntity<GameRecordDto> createGameRecord(@RequestBody CreateGameRecordRequest request) {
     GameRecordDto dto = gameRecordService.createRecord(request);
     if(dto == null)
