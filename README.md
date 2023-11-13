@@ -2,6 +2,9 @@
 
 This module consists of the implentations for server-side development of desktop application of our Catan game.
 
+- Detailed documentation of the project can be found on [./documents/Catan Backend.pdf](./documents/Catan%20Backend.pdf)
+
+
 ## Used Libraries
 - Kotlin (for cleaner entities)
 - Spotless (linter)
