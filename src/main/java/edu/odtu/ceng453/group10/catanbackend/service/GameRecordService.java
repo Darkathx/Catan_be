@@ -3,6 +3,7 @@ package edu.odtu.ceng453.group10.catanbackend.service;
 import edu.odtu.ceng453.group10.catanbackend.dto.CreateGameRecordRequest;
 import edu.odtu.ceng453.group10.catanbackend.dto.GameRecordDto;
 import edu.odtu.ceng453.group10.catanbackend.dto.GameRecordDtoConverter;
+import edu.odtu.ceng453.group10.catanbackend.exception.RecordNotCreatedException;
 import edu.odtu.ceng453.group10.catanbackend.model.GameRecord;
 import edu.odtu.ceng453.group10.catanbackend.repository.GameRecordRepository;
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class GameRecordService {
     boolean isSuccessfullyCreated = gameScoreService.createGameScore(request, gameRecord);
     if(!isSuccessfullyCreated) {
       repository.deleteById(gameRecord.getId());
-      return null;
+      throw new RecordNotCreatedException("");
     }
     return converter.convert(gameRecord);
   }

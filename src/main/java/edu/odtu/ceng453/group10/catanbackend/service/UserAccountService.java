@@ -2,6 +2,7 @@ package edu.odtu.ceng453.group10.catanbackend.service;
 
 import edu.odtu.ceng453.group10.catanbackend.config.SMTPConfig;
 import edu.odtu.ceng453.group10.catanbackend.dto.*;
+import edu.odtu.ceng453.group10.catanbackend.exception.UnauthorizedLoginException;
 import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import edu.odtu.ceng453.group10.catanbackend.repository.UserAccountRepository;
 import jakarta.mail.Message;
@@ -51,7 +52,13 @@ public class UserAccountService {
         String hashedPw = hashPassword(request.getPassword());
 
         UserAccount userAccount = new UserAccount(request.getUsername(), hashedPw, LocalDateTime.now(), request.getEmail());
-        return converter.convert(repository.save(userAccount));
+        try {
+            return converter.convert(repository.save(userAccount));
+        }
+        catch (Exception e) {
+            throw new UnauthorizedLoginException("Email/username already exists.");
+        }
+
     }
 
     /**
@@ -68,7 +75,7 @@ public class UserAccountService {
                 return converter.convert(userAccount);
             }
         }
-        return null;
+        throw new UnauthorizedLoginException("Invalid email or password.");
     }
 
     /**
