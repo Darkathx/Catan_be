@@ -3,6 +3,7 @@ package edu.odtu.ceng453.group10.catanbackend;
 import edu.odtu.ceng453.group10.catanbackend.dto.LoginUserAccountRequest;
 import edu.odtu.ceng453.group10.catanbackend.dto.UserAccountDto;
 import edu.odtu.ceng453.group10.catanbackend.dto.UserAccountDtoConverter;
+import edu.odtu.ceng453.group10.catanbackend.exception.UnauthorizedLoginException;
 import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import edu.odtu.ceng453.group10.catanbackend.repository.UserAccountRepository;
 import edu.odtu.ceng453.group10.catanbackend.service.UserAccountService;
@@ -18,8 +19,9 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-    @SpringBootTest
+@SpringBootTest
     public class UserAccountServiceTests {
 
         @Mock
@@ -63,13 +65,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
             Mockito.when(repository.findUserAccountByEmail(request.getEmail())).thenReturn(null);
 
             // Act
-            UserAccountDto result = userAccountService.loginUserAccount(request);
+            assertThrows(UnauthorizedLoginException.class, () -> userAccountService.loginUserAccount(request));
+
 
             // Assert
             Mockito.verify(repository, Mockito.times(1)).findUserAccountByEmail(request.getEmail());
             Mockito.verify(passwordEncoder, Mockito.never()).matches(Mockito.any(), Mockito.any());
             Mockito.verify(converter, Mockito.never()).convert(Mockito.any());
-            assertNull(result);
         }
 
         @Test
@@ -83,11 +85,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
             Mockito.doReturn(false).when(mockServiceMethods).checkPassword(request.getPassword(), userAccount.getPassword());
 
             // Act
-            UserAccountDto result = mockServiceMethods.loginUserAccount(request);
+            assertThrows(UnauthorizedLoginException.class, () -> mockServiceMethods.loginUserAccount(request));
 
             // Assert
             Mockito.verify(repository, Mockito.times(1)).findUserAccountByEmail(request.getEmail());
             Mockito.verify(converter, Mockito.never()).convert(Mockito.any());
-            assertNull(result);
         }
     }
