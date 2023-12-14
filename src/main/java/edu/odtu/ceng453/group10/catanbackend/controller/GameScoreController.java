@@ -1,12 +1,14 @@
 package edu.odtu.ceng453.group10.catanbackend.controller;
 
 import edu.odtu.ceng453.group10.catanbackend.dto.GameScoreDto;
+import edu.odtu.ceng453.group10.catanbackend.model.GameScore;
 import edu.odtu.ceng453.group10.catanbackend.service.GameScoreService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import java.util.ArrayList;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,7 @@ public class GameScoreController {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error")
             })
     @GetMapping("/weekly")
-    public ResponseEntity<List<GameScoreDto>> getWeeklyLeaderboard() {
+    public ResponseEntity<ArrayList<GameScoreDto>> getWeeklyLeaderboard() {
         return ResponseEntity.ok(gameScoreService.getLeaderboardForLastWeek());
     }
 
@@ -46,7 +48,7 @@ public class GameScoreController {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error")
             })
     @GetMapping("/monthly")
-    public ResponseEntity<List<GameScoreDto>> getMonthlyLeaderboard() {
+    public ResponseEntity<ArrayList<GameScoreDto>> getMonthlyLeaderboard() {
         return ResponseEntity.ok(gameScoreService.getLeaderboardForLastMonth());
     }
 
@@ -59,7 +61,7 @@ public class GameScoreController {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error")
             })
     @GetMapping("/overall")
-    public ResponseEntity<List<GameScoreDto>> getOverallLeaderboard() {
+    public ResponseEntity<ArrayList<GameScoreDto>> getOverallLeaderboard() {
         return ResponseEntity.ok(gameScoreService.getOverallLeaderboard());
     }
 }

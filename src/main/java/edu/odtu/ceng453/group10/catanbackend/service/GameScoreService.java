@@ -7,6 +7,12 @@ import edu.odtu.ceng453.group10.catanbackend.model.GameScore;
 import edu.odtu.ceng453.group10.catanbackend.model.ScoreTableKey;
 import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import edu.odtu.ceng453.group10.catanbackend.repository.GameScoreRepository;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -43,7 +49,7 @@ public class GameScoreService {
         boolean returnValue = false;
         for(int i = 0; i < 4; i++) {
             String playerId;
-            int playerScore = 0;
+            int playerScore;
             playerId = switch(i) {
                 case 0:
                     yield request.getFirstPlayerId();
@@ -84,9 +90,10 @@ public class GameScoreService {
      *
      * @return A list of GameScoreDto representing the scores for the last week.
      */
-    public List<GameScoreDto> getLeaderboardForLastWeek() {
+    public ArrayList<GameScoreDto> getLeaderboardForLastWeek() {
         LocalDateTime oneWeekAgo = LocalDateTime.now().minusWeeks(1);
-        return gameScoreRepository.findTotalScoresBetweenDates(oneWeekAgo, LocalDateTime.now());
+        ArrayList<String> leaderboardList = gameScoreRepository.findTotalScoresBetweenDates(oneWeekAgo, LocalDateTime.now());
+        return createLeaderboard(leaderboardList);
     }
 
     /**
@@ -94,9 +101,10 @@ public class GameScoreService {
      *
      * @return A list of GameScoreDto representing the scores for the last month.
      */
-    public List<GameScoreDto> getLeaderboardForLastMonth() {
+    public ArrayList<GameScoreDto> getLeaderboardForLastMonth() {
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-        return gameScoreRepository.findTotalScoresBetweenDates(oneMonthAgo, LocalDateTime.now());
+        ArrayList<String> leaderboardList = gameScoreRepository.findTotalScoresBetweenDates(oneMonthAgo, LocalDateTime.now());
+        return createLeaderboard(leaderboardList);
     }
 
     /**
@@ -104,7 +112,22 @@ public class GameScoreService {
      *
      * @return A list of GameScoreDto representing the overall scores.
      */
-    public List<GameScoreDto> getOverallLeaderboard() {
-        return gameScoreRepository.findAllTotalScores();
+    public ArrayList<GameScoreDto> getOverallLeaderboard() {
+        ArrayList<String> list = gameScoreRepository.findAllTotalScores();
+        return createLeaderboard(list);
+    }
+
+    private ArrayList<GameScoreDto> createLeaderboard(ArrayList<String> leaderboardList) {
+        ArrayList<GameScoreDto> leaderboard = new ArrayList<>();
+        for(int len = leaderboardList.size(), i = 0; i < 10; i++) {
+            if(i >= len) {
+                leaderboard.add(new GameScoreDto("N/A", 0));
+            }
+            else {
+                String[] split = leaderboardList.get(i).split(",");
+                leaderboard.add(new GameScoreDto(split[0], Integer.parseInt(split[1])));
+            }
+        }
+        return leaderboard;
     }
 }
