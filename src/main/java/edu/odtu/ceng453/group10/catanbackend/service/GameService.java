@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 public class GameService {
   private final GameRepository repository;
   private final UserAccountService userAccountService;
-  private final GameStateRepository stateRepository;
+  private final GameStateService gameStateService;
 
   public GameService(GameRepository repository,
                       UserAccountService userAccountService,
-                      GameStateRepository stateRepository) {
+                      GameStateService gameStateService) {
     this.repository = repository;
     this.userAccountService = userAccountService;
-    this.stateRepository = stateRepository;
+    this.gameStateService = gameStateService;
   }
 
   /**
@@ -60,7 +60,7 @@ public class GameService {
 
   public GameState getGameState(String gameId) {
     Game game = repository.findById(gameId).orElseThrow();
-    return stateRepository.findByGameId(game);
+    return gameStateService.getGameState(game);
   }
 
   /**
@@ -70,6 +70,6 @@ public class GameService {
    */
 
   public GameState setGameState(GameState gameState) {
-    return stateRepository.save(gameState);
+    return gameStateService.saveGameState(gameState);
   }
 }
