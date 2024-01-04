@@ -5,6 +5,8 @@ import edu.odtu.ceng453.group10.catanbackend.model.GameState;
 import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import edu.odtu.ceng453.group10.catanbackend.repository.GameRepository;
 import edu.odtu.ceng453.group10.catanbackend.repository.GameStateRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,23 +34,29 @@ public class GameService {
    */
 
   public Game searchAndJoinGame(String username) {
-    Game game = repository.findEmptyGames().getFirst();
-    UserAccount acc = userAccountService.getUserAccount(username);
-    if (game.getP1() == null) {
-      game.setP1(acc);
-    }
-    else if (game.getP2() == null) {
-      game.setP2(acc);
-    }
-    else if (game.getP3() == null) {
-      game.setP3(acc);
-    }
-    else if (game.getP4() == null) {
-      game.setP4(acc);
+    ArrayList<Game> gameList = repository.findEmptyGames();
+    Game game;
+    if (gameList.isEmpty()) {
+      game = new Game();
     }
     else {
-      game = new Game("", acc, null, null, null);
+      game = gameList.getFirst();
     }
+    UserAccount acc = userAccountService.getUserAccount(username);
+    List<UserAccount> players = game.getPlayers();
+    if (players.getFirst() == null) {
+      players.set(0, acc);
+    }
+    else if (players.get(1) == null) {
+      players.set(1, acc);
+    }
+    else if (players.get(2) == null) {
+      players.set(2, acc);
+    }
+    else if (players.get(3) == null) {
+      players.set(3, acc);
+    }
+    game.setPlayerCount(game.getPlayerCount() + 1);
     return repository.save(game);
   }
 
@@ -70,6 +78,7 @@ public class GameService {
    */
 
   public GameState setGameState(GameState gameState) {
+
     return gameStateService.saveGameState(gameState);
   }
 }

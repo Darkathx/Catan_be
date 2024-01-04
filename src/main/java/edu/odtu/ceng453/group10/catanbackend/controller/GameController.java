@@ -44,7 +44,8 @@ public class GameController {
       })
   @GetMapping(value = "/gameState")
   public ResponseEntity<GameState> getGameState(String gameId) {
-    return ResponseEntity.ok(gameService.getGameState(gameId));
+    GameState gameState = gameService.getGameState(gameId);
+    return ResponseEntity.ok(gameState);
   }
 
   @Operation(summary = "Set game state",

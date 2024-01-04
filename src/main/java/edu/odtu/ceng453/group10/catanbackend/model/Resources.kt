@@ -3,7 +3,6 @@ package edu.odtu.ceng453.group10.catanbackend.model
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
-import jakarta.persistence.OneToOne
 import org.hibernate.annotations.UuidGenerator
 
 @Entity

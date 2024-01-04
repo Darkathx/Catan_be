@@ -1,23 +1,26 @@
 package edu.odtu.ceng453.group10.catanbackend.model
 
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
 import org.hibernate.annotations.UuidGenerator
 
 @Entity
+@Table(name = "game_state")
 data class GameState(
         @Id
         @UuidGenerator
         val id: String = "default",
-        @OneToOne(mappedBy = "id")
-        val gameId: Game? = null,
-        val playerTurn: Int,
+
+        @OneToOne
+        @JoinColumn(name = "game_id", referencedColumnName = "id")
+        var game: Game? = null,
+
+        val playerTurn: Int = 0,
         val dice1: Int = 0,
         val dice2: Int = 0,
-        @OneToMany(mappedBy = "id")
+
+        @OneToMany(mappedBy = "gameStateId")
         val resources: List<Resources>? = null,
-        @OneToMany(mappedBy = "id")
-        val buildings: List<Buildings>? = null,
+
+        @OneToMany(mappedBy = "gameStateId")
+        val buildings: List<Building>? = null,
 )

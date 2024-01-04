@@ -45,7 +45,11 @@ data class UserAccount(
      * This relationship is defined with a many-to-many association, with a join table specifying the foreign keys.
      */
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.EAGER)
-    val playedGames: Set<GameScore>? = null
+    val playedGames: Set<GameScore>? = null,
+
+    @ManyToOne
+    val curGame: Game? = null
+
 ) {
     /**
      * Secondary constructor for the UserAccount class that allows creation of an account with just the username,
@@ -56,6 +60,8 @@ data class UserAccount(
         username = username,
         password = password,
         creationDate = creationDate,
-        email = email
+        email = email,
+            curGame = null
+
     )
 }

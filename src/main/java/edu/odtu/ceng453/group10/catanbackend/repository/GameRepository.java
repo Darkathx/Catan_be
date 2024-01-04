@@ -16,7 +16,8 @@ public interface GameRepository extends JpaRepository<Game, String> {
    *
    * @return A list of Game objects containing game ids.
    */
-  @Query("SELECT g FROM Game g WHERE g.p1 = null OR g.p2 = null OR g.p3 = null OR g.p4 = null")
+
+  @Query("SELECT g FROM Game g WHERE g.playerCount < 2")
   ArrayList<Game> findEmptyGames();
 
 }
