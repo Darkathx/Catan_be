@@ -42,7 +42,7 @@ public class GameService {
     else {
       game = gameList.getFirst();
     }
-    UserAccount acc = userAccountService.getUserAccount(username);
+    UserAccount acc = userAccountService.getUserAccountByUsername(username);
     List<UserAccount> players = game.getPlayers();
     if (players.getFirst() == null) {
       players.set(0, acc);

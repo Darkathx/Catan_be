@@ -17,4 +17,5 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, String
      * @return The UserAccount associated with the given email if it exists; null otherwise.
      */
     UserAccount findUserAccountByEmail(String email);
+    UserAccount findUserAccountByUsername(String username);
 }

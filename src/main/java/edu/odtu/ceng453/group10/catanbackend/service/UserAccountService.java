@@ -42,6 +42,10 @@ public class UserAccountService {
       return repository.findUserAccountByEmail(userAccountId);
     }
 
+    public UserAccount getUserAccountByUsername(String username) {
+      return repository.findUserAccountByUsername(username);
+    }
+
     /**
      * Creates a new user account based on the provided request data.
      *

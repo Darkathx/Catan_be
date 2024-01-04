@@ -4,6 +4,7 @@ import edu.odtu.ceng453.group10.catanbackend.model.Game;
 import edu.odtu.ceng453.group10.catanbackend.model.GameState;
 import edu.odtu.ceng453.group10.catanbackend.repository.BuildingRepository;
 import edu.odtu.ceng453.group10.catanbackend.repository.GameStateRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
