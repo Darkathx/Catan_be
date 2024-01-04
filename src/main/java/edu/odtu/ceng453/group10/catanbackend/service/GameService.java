@@ -60,6 +60,10 @@ public class GameService {
     return repository.save(game);
   }
 
+  public Game getGame(String gameId) {
+    return repository.findById(gameId).orElseThrow();
+  }
+
   /**
    * Returns the game state of the given game.
    * @param gameId id of the game

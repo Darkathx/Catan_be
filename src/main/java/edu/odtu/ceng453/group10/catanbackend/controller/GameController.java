@@ -1,9 +1,14 @@
 package edu.odtu.ceng453.group10.catanbackend.controller;
 
+import edu.odtu.ceng453.group10.catanbackend.dto.GameDto;
+import edu.odtu.ceng453.group10.catanbackend.dto.GameStateDto;
 import edu.odtu.ceng453.group10.catanbackend.model.Game;
 import edu.odtu.ceng453.group10.catanbackend.model.GameState;
+import edu.odtu.ceng453.group10.catanbackend.model.UserAccount;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.ArrayList;
+import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,8 +37,20 @@ public class GameController {
         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input")
       })
   @PostMapping(value = "/join")
-  public ResponseEntity<Game> joinGame(String username) {
-    return ResponseEntity.ok(gameService.searchAndJoinGame(username));
+  public ResponseEntity<GameDto> joinGame(String username) {
+    Game game = gameService.searchAndJoinGame(username);
+    ArrayList<String> names = new ArrayList<>();
+    for (UserAccount account : game.getPlayers()) {
+      names.add(account.getUsername());
+    }
+    String stateId = null;
+    GameState state = game.getState();
+    if(state != null) {
+      stateId = state.getId();
+    }
+
+    GameDto dto = new GameDto(game.getId(), stateId, names, game.getPlayerCount());
+    return ResponseEntity.ok(dto);
   }
 
   @Operation(summary = "Get game state",
@@ -43,9 +60,10 @@ public class GameController {
         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input")
       })
   @GetMapping(value = "/gameState")
-  public ResponseEntity<GameState> getGameState(String gameId) {
+  public ResponseEntity<GameStateDto> getGameState(String gameId) {
     GameState gameState = gameService.getGameState(gameId);
-    return ResponseEntity.ok(gameState);
+    return ResponseEntity.ok(new GameStateDto(gameState.getId(), gameState.getGame().getId(), gameState.getPlayerTurn(), gameState.getDice1(),
+        gameState.getDice2(), gameState.getResources(), gameState.getBuildings()));
   }
 
   @Operation(summary = "Set game state",
@@ -55,7 +73,12 @@ public class GameController {
         @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid input")
       })
   @PostMapping(value = "/gameState")
-  public ResponseEntity<GameState> setGameState(GameState gameState) {
-    return ResponseEntity.ok(gameService.setGameState(gameState));
+  public ResponseEntity<GameStateDto> setGameState(GameStateDto gameStateDto) {
+    Game game = gameService.getGame(gameStateDto.getGameId());
+    GameState gameState = new GameState(gameStateDto.getId(), game, gameStateDto.getPlayerTurn(),gameStateDto.getDice1(), gameStateDto.getDice2(),
+        gameStateDto.getResources(), gameStateDto.getBuildings());
+    gameState = gameService.setGameState(gameState);
+    return ResponseEntity.ok(new GameStateDto(gameState.getId(), gameState.getGame().getId(), gameState.getPlayerTurn(), gameState.getDice1(),
+        gameState.getDice2(), gameState.getResources(), gameState.getBuildings()));
   }
 }
