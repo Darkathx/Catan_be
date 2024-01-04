@@ -103,9 +103,7 @@ public class UserAccountService {
      * @return true if the email was sent successfully, false otherwise.
      */
     public boolean sendResetMail(LoginUserAccountRequest request) {
-        UserAccountDto login = loginUserAccount(request);
-        if(login == null) return false;
-
+        loginUserAccount(request);
         Session session = SMTPConfig.getSession();
         try {
             MimeMessage message = new MimeMessage(session);
@@ -117,6 +115,7 @@ public class UserAccountService {
             return true;
         }
         catch (MessagingException ex) {
+            ex.printStackTrace();
             return false;
         }
     }

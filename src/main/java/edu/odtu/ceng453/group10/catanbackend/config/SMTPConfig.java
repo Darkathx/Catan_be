@@ -18,11 +18,11 @@ public final class SMTPConfig {
      */
     public static String URL = "https://catan-backend-ds1e.onrender.com/userAccount/resetPassword";
     static {
-        //PROP.put("mail.smtp.auth", true);
-        //PROP.put("mail.smtp.starttls.enable", "true");
+        PROP.put("mail.smtp.auth", true);
+        PROP.put("mail.smtp.starttls.enable", "true");
         PROP.put("mail.smtp.host", "localhost");
         PROP.put("mail.smtp.port", "25");
-        //PROP.put("mail.smtp.ssl.trust", "");
+        PROP.put("mail.smtp.ssl.trust", "");
     }
 
     /**

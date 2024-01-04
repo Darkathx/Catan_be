@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         public void testLoginUserAccount_successCase() {
             // Arrange
             LoginUserAccountRequest request = new LoginUserAccountRequest("test@example.com", "password");
-            UserAccount userAccount = new UserAccount("id", "username", "password", LocalDateTime.now(), "test@example.com", Set.of());
+            UserAccount userAccount = new UserAccount("id", "username", "password", LocalDateTime.now(), "test@example.com", Set.of(), null);
             UserAccountService mockServiceMethods = Mockito.spy(userAccountService);
 
             Mockito.when(repository.findUserAccountByEmail(request.getEmail())).thenReturn(userAccount);
@@ -78,7 +78,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         public void testLoginUserAccount_invalidPassword() {
             // Arrange
             LoginUserAccountRequest request = new LoginUserAccountRequest("test@example.com", "password");
-            UserAccount userAccount = new UserAccount("id", "username", "password", LocalDateTime.now(), "test@example.com", Set.of());
+            UserAccount userAccount = new UserAccount("id", "username", "password", LocalDateTime.now(), "test@example.com", Set.of(), null);
             UserAccountService mockServiceMethods = Mockito.spy(userAccountService);
 
             Mockito.when(repository.findUserAccountByEmail(request.getEmail())).thenReturn(userAccount);
