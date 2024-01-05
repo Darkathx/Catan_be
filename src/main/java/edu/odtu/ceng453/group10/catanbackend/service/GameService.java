@@ -36,7 +36,7 @@ public class GameService {
   public Game searchAndJoinGame(String username) {
     ArrayList<Game> gameList = repository.findEmptyGames();
     Game game;
-    if (gameList == null) {
+    if (gameList == null || gameList.isEmpty()) {
       game = new Game();
     }
     else {
