@@ -41,6 +41,7 @@ public class GameController {
     Game game = gameService.searchAndJoinGame(username);
     ArrayList<String> names = new ArrayList<>();
     for (UserAccount account : game.getPlayers()) {
+      if(account == null) break;
       names.add(account.getUsername());
     }
     String stateId = null;
