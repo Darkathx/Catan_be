@@ -76,6 +76,9 @@ Visit [API Documentation - Swagger UI](https://catan-backend-ds1e.onrender.com/s
 
 - **UserAccount to GameRecord Relationship**: This is a many-to-many relationship where users can have multiple game records and each game record can be associated with multiple users. This is because users can play multiple games and obtain scores in each, and a game can be played by multiple users each having their own scores.
 
+### After Multiplayer Support
+![cwe](https://github.com/Darkathx/CENG453_20231_Group10_backend/assets/69731004/0b2a8cb6-db3f-45d2-af52-11362e95943a)
+
 ## Testing 
 
 Run unit and database tests with:
